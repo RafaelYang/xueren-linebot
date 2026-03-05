@@ -36,7 +36,7 @@ const richMenu1 = {
     areas: [
         // 上方 Tab - 左半「精選活動」（切換到自己，alias-1）
         {
-            bounds: { x: 0, y: 0, width: 1250, height: 80 },
+            bounds: { x: 0, y: 0, width: 1250, height: 68 },
             action: {
                 type: 'richmenuswitch',
                 richMenuAliasId: 'alias-xueren-1',
@@ -46,7 +46,7 @@ const richMenu1 = {
         },
         // 上方 Tab - 右半「跟著大師學領導力」（切換到 Tab2，alias-2）
         {
-            bounds: { x: 1250, y: 0, width: 1250, height: 80 },
+            bounds: { x: 1250, y: 0, width: 1250, height: 68 },
             action: {
                 type: 'richmenuswitch',
                 richMenuAliasId: 'alias-xueren-2',
@@ -54,9 +54,9 @@ const richMenu1 = {
                 clipboardText: '跟著大師學領導力',
             },
         },
-        // 下方「立即報名」按鈕（紅色圓形，右下角）
+        // 下方「立即報名」紅色圓形按鈕（中央偏右下）
         {
-            bounds: { x: 1620, y: 630, width: 300, height: 213 },
+            bounds: { x: 940, y: 660, width: 380, height: 183 },
             action: {
                 type: 'uri',
                 uri: GOOGLE_FORM_URL,
@@ -82,7 +82,7 @@ const richMenu2 = {
     areas: [
         // 上方 Tab - 左半「精選活動」（切換 alias-1）
         {
-            bounds: { x: 0, y: 0, width: 1250, height: 80 },
+            bounds: { x: 0, y: 0, width: 1250, height: 68 },
             action: {
                 type: 'richmenuswitch',
                 richMenuAliasId: 'alias-xueren-1',
@@ -92,7 +92,7 @@ const richMenu2 = {
         },
         // 上方 Tab - 右半「跟著大師學領導力」（切換到自己）
         {
-            bounds: { x: 1250, y: 0, width: 1250, height: 80 },
+            bounds: { x: 1250, y: 0, width: 1250, height: 68 },
             action: {
                 type: 'richmenuswitch',
                 richMenuAliasId: 'alias-xueren-2',
@@ -100,25 +100,33 @@ const richMenu2 = {
                 clipboardText: '跟著大師學領導力',
             },
         },
-        // 第一季播放按鈕（左欄）
+        // 第一季播放卡片（左欄）
         {
-            bounds: { x: 60, y: 90, width: 700, height: 753 },
+            bounds: { x: 52, y: 73, width: 740, height: 500 },
             action: {
                 type: 'uri',
                 uri: YOUTUBE_URL,
             },
         },
-        // 第二季播放按鈕（中欄）
+        // 第二季播放卡片（中欄）
         {
-            bounds: { x: 860, y: 90, width: 700, height: 753 },
+            bounds: { x: 875, y: 73, width: 740, height: 500 },
             action: {
                 type: 'uri',
                 uri: YOUTUBE_URL,
             },
         },
-        // 第三季播放按鈕（右欄，不含最右邊小 logo）
+        // 第三季播放卡片（右欄）
         {
-            bounds: { x: 1650, y: 90, width: 700, height: 753 },
+            bounds: { x: 1698, y: 73, width: 740, height: 500 },
+            action: {
+                type: 'uri',
+                uri: YOUTUBE_URL,
+            },
+        },
+        // 下方 YouTube 搜尋列
+        {
+            bounds: { x: 330, y: 660, width: 1560, height: 160 },
             action: {
                 type: 'uri',
                 uri: YOUTUBE_URL,
@@ -126,6 +134,7 @@ const richMenu2 = {
         },
     ],
 };
+
 
 // ===========================
 // 上傳圖片
