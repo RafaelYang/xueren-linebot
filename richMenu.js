@@ -54,9 +54,9 @@ const richMenu1 = {
                 clipboardText: '跟著大師學領導力',
             },
         },
-        // 下方「立即報名」紅色圓形按鈕（中下方）
+        // 下方「立即報名」紅色圓形按鈕（右下角）
         {
-            bounds: { x: 450, y: 635, width: 190, height: 175 },
+            bounds: { x: 940, y: 615, width: 200, height: 195 },
             action: {
                 type: 'uri',
                 uri: GOOGLE_FORM_URL,
