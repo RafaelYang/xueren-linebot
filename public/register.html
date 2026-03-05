@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>學人新創 - 活動報名</title>
+  <!-- LIFF SDK -->
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===========================
+       全域樣式
+    =========================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ===========================
+       卡片容器
+    =========================== */
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===========================
+       標題區
+    =========================== */
+    .logo-area {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo-area .tag {
+      display: inline-block;
+      background: linear-gradient(90deg, #e94560, #f5a623);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+
+    .logo-area h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .logo-area p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+
+    /* ===========================
+       表單
+    =========================== */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 0.4rem;
+    }
+
+    label .required {
+      color: #e94560;
+      margin-left: 2px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: 'Noto Sans TC', sans-serif;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(233, 69, 96, 0.6);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    select option {
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    /* ===========================
+       提交按鈕
+    =========================== */
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      margin-top: 0.5rem;
+      background: linear-gradient(90deg, #e94560, #f5a623);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Noto Sans TC', sans-serif;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ===========================
+       成功訊息
+    =========================== */
+    .success-box {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .success-box .icon { font-size: 3.5rem; margin-bottom: 1rem; }
+
+    .success-box h2 {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 0.75rem;
+    }
+
+    .success-box p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ===========================
+       錯誤提示
+    =========================== */
+    .error-msg {
+      display: none;
+      background: rgba(233, 69, 96, 0.15);
+      border: 1px solid rgba(233, 69, 96, 0.4);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      color: #e94560;
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- 表單區 -->
+    <div id="formArea">
+      <div class="logo-area">
+        <div class="tag">📋 活動報名</div>
+        <h1>學人新創</h1>
+        <p>填寫下方表單完成報名<br/>我們將盡快與您聯繫！</p>
+      </div>
+
+      <form id="registerForm">
+        <div class="form-group">
+          <label>姓名 <span class="required">*</span></label>
+          <input type="text" id="name" placeholder="請輸入您的姓名" required />
+        </div>
+
+        <div class="form-group">
+          <label>Email <span class="required">*</span></label>
+          <input type="email" id="email" placeholder="example@email.com" required />
+        </div>
+
+        <div class="form-group">
+          <label>電話 <span class="required">*</span></label>
+          <input type="tel" id="phone" placeholder="請輸入您的手機號碼" required />
+        </div>
+
+        <div class="form-group">
+          <label>想參加的活動 <span class="required">*</span></label>
+          <select id="activity" required>
+            <option value="">請選擇活動</option>
+            <!-- ⚠️ 請根據實際活動修改這裡的選項 -->
+            <option value="新創工作坊">新創工作坊</option>
+            <option value="AI 應用課程">AI 應用課程</option>
+            <option value="創業輔導計畫">創業輔導計畫</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>備註（選填）</label>
+          <textarea id="note" placeholder="任何想讓我們知道的事..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">確認送出報名 🚀</button>
+        <div class="error-msg" id="errorMsg"></div>
+      </form>
+    </div>
+
+    <!-- 成功訊息區 -->
+    <div class="success-box" id="successBox">
+      <div class="icon">🎉</div>
+      <h2>報名成功！</h2>
+      <p>感謝您的報名，<br/>學人新創團隊將在 1–2 個工作天內與您聯繫。<br/><br/>期待與您一起創造可能性 ✨</p>
+    </div>
+  </div>
+
+  <script>
+    // ===========================
+    // LIFF 初始化
+    // ===========================
+    const LIFF_ID = '{{LIFF_ID}}'; // 由伺服器注入，或直接填入
+
+    // 從網址讀取 LIFF ID（或使用預設）
+    async function initLiff() {
+      try {
+        // 若 LIFF_ID 還沒設定，頁面仍可正常顯示表單
+        if (LIFF_ID && LIFF_ID !== '{{LIFF_ID}}') {
+          await liff.init({ liffId: LIFF_ID });
+        }
+      } catch (err) {
+        console.warn('LIFF init 跳過（本地測試模式）', err);
+      }
+    }
+    initLiff();
+
+    // ===========================
+    // 送出報名表單
+    // ===========================
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = '送出中...';
+
+      // 取得使用者 LINE User ID（若有 LIFF）
+      let userId = 'anonymous';
+      try {
+        if (liff.isLoggedIn()) {
+          const profile = await liff.getProfile();
+          userId = profile.userId;
+        }
+      } catch (_) {}
+
+      const payload = {
+        name:     document.getElementById('name').value.trim(),
+        email:    document.getElementById('email').value.trim(),
+        phone:    document.getElementById('phone').value.trim(),
+        activity: document.getElementById('activity').value,
+        note:     document.getElementById('note').value.trim(),
+        userId,
+      };
+
+      try {
+        // 呼叫後端 API 儲存資料
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // 顯示成功畫面
+          document.getElementById('formArea').style.display = 'none';
+          document.getElementById('successBox').style.display = 'block';
+          // 3 秒後關閉 LIFF（若有）
+          setTimeout(() => {
+            try { liff.closeWindow(); } catch (_) {}
+          }, 3000);
+        } else {
+          throw new Error(data.message || '送出失敗');
+        }
+      } catch (err) {
+        errorMsg.textContent = '😢 送出失敗，請稍後再試或直接聯繫我們';
+        errorMsg.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = '確認送出報名 🚀';
+      }
+    });
+  </script>
+</body>
+</html>
