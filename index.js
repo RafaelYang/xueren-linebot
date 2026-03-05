@@ -102,16 +102,31 @@ app.get('/ping', (req, res) => {
 async function handleEvent(event) {
   const replyToken = event.replyToken;
 
-  // 處理一般訊息（文字問答 → AI 回覆）
+  // 處理一般訊息（文字問答 → AI 回覆 + 動態建議問題）
   if (event.type === 'message' && event.message.type === 'text') {
     const userMessage = event.message.text.trim();
 
     try {
-      const aiReply = await askOpenAI(userMessage);
-      await client.replyMessage({
-        replyToken,
-        messages: [{ type: 'text', text: aiReply }],
-      });
+      const { answer, suggestions } = await askOpenAI(userMessage);
+
+      // 建立訊息物件
+      const message = { type: 'text', text: answer };
+
+      // 若 AI 有產生建議問題，加入 Quick Reply 按鈕
+      if (suggestions.length > 0) {
+        message.quickReply = {
+          items: suggestions.map(q => ({
+            type: 'action',
+            action: {
+              type: 'message',
+              label: q.length > 20 ? q.slice(0, 19) + '…' : q, // LINE 限制最多 20 字
+              text: q,
+            },
+          })),
+        };
+      }
+
+      await client.replyMessage({ replyToken, messages: [message] });
     } catch (err) {
       console.error('[AI 回覆錯誤]', err.message);
       await client.replyMessage({
@@ -121,6 +136,7 @@ async function handleEvent(event) {
     }
     return;
   }
+
 
   // 處理 Postback 事件（圖文選單中間／右側按鈕）
   if (event.type === 'postback') {
