@@ -29,14 +29,14 @@ const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfxQ5QImmhn1im
 //       大約 x=640~900, y=640~843（相對整圖）
 // ===========================
 const richMenu1 = {
-    size: { width: 2500, height: 843 },
+    size: { width: 1200, height: 810 },
     selected: true,
     name: '精選活動',
     chatBarText: '點我開啟選單',
     areas: [
         // 上方 Tab - 左半「精選活動」（切換到自己，alias-1）
         {
-            bounds: { x: 0, y: 0, width: 1250, height: 68 },
+            bounds: { x: 0, y: 0, width: 600, height: 65 },
             action: {
                 type: 'richmenuswitch',
                 richMenuAliasId: 'alias-xueren-1',
@@ -46,7 +46,7 @@ const richMenu1 = {
         },
         // 上方 Tab - 右半「跟著大師學領導力」（切換到 Tab2，alias-2）
         {
-            bounds: { x: 1250, y: 0, width: 1250, height: 68 },
+            bounds: { x: 600, y: 0, width: 600, height: 65 },
             action: {
                 type: 'richmenuswitch',
                 richMenuAliasId: 'alias-xueren-2',
@@ -54,9 +54,9 @@ const richMenu1 = {
                 clipboardText: '跟著大師學領導力',
             },
         },
-        // 下方「立即報名」紅色圓形按鈕（中央偏右下）
+        // 下方「立即報名」紅色圓形按鈕（中下方）
         {
-            bounds: { x: 940, y: 660, width: 380, height: 183 },
+            bounds: { x: 450, y: 635, width: 190, height: 175 },
             action: {
                 type: 'uri',
                 uri: GOOGLE_FORM_URL,
@@ -75,14 +75,14 @@ const richMenu1 = {
 //     每欄 x 約 140/880/1600，寬約 640，高 763px
 // ===========================
 const richMenu2 = {
-    size: { width: 2500, height: 843 },
+    size: { width: 1200, height: 810 },
     selected: false,
     name: '跟著大師學領導力',
     chatBarText: '點我開啟選單',
     areas: [
         // 上方 Tab - 左半「精選活動」（切換 alias-1）
         {
-            bounds: { x: 0, y: 0, width: 1250, height: 68 },
+            bounds: { x: 0, y: 0, width: 600, height: 65 },
             action: {
                 type: 'richmenuswitch',
                 richMenuAliasId: 'alias-xueren-1',
@@ -90,9 +90,9 @@ const richMenu2 = {
                 clipboardText: '精選活動',
             },
         },
-        // 上方 Tab - 右半「跟著大師學領導力」（切換到自己）
+        // 上方 Tab - 右半「跟著大師」（切換到自己）
         {
-            bounds: { x: 1250, y: 0, width: 1250, height: 68 },
+            bounds: { x: 600, y: 0, width: 600, height: 65 },
             action: {
                 type: 'richmenuswitch',
                 richMenuAliasId: 'alias-xueren-2',
@@ -102,7 +102,7 @@ const richMenu2 = {
         },
         // 第一季播放卡片（左欄）
         {
-            bounds: { x: 52, y: 73, width: 740, height: 500 },
+            bounds: { x: 25, y: 70, width: 355, height: 490 },
             action: {
                 type: 'uri',
                 uri: YOUTUBE_URL,
@@ -110,7 +110,7 @@ const richMenu2 = {
         },
         // 第二季播放卡片（中欄）
         {
-            bounds: { x: 875, y: 73, width: 740, height: 500 },
+            bounds: { x: 420, y: 70, width: 355, height: 490 },
             action: {
                 type: 'uri',
                 uri: YOUTUBE_URL,
@@ -118,7 +118,7 @@ const richMenu2 = {
         },
         // 第三季播放卡片（右欄）
         {
-            bounds: { x: 1698, y: 73, width: 740, height: 500 },
+            bounds: { x: 815, y: 70, width: 355, height: 490 },
             action: {
                 type: 'uri',
                 uri: YOUTUBE_URL,
@@ -126,7 +126,7 @@ const richMenu2 = {
         },
         // 下方 YouTube 搜尋列
         {
-            bounds: { x: 330, y: 660, width: 1560, height: 160 },
+            bounds: { x: 150, y: 660, width: 750, height: 120 },
             action: {
                 type: 'uri',
                 uri: YOUTUBE_URL,
@@ -183,7 +183,7 @@ async function setup() {
         console.log(`✅ 選單 1 建立完成，ID: ${menuId1}`);
 
         console.log('🖼️  上傳圖片 1...');
-        await uploadImage(menuId1, path.join(__dirname, 'public', 'menu1.jpg'), 'image/jpeg');
+        await uploadImage(menuId1, path.join(__dirname, 'public', 'menu1.png'), 'image/png');
         console.log('✅ 圖片 1 上傳完成');
 
         console.log('\n📋 建立圖文選單 2（跟著大師）...');
@@ -192,7 +192,7 @@ async function setup() {
         console.log(`✅ 選單 2 建立完成，ID: ${menuId2}`);
 
         console.log('🖼️  上傳圖片 2...');
-        await uploadImage(menuId2, path.join(__dirname, 'public', 'menu2.jpg'), 'image/jpeg');
+        await uploadImage(menuId2, path.join(__dirname, 'public', 'menu2.png'), 'image/png');
         console.log('✅ 圖片 2 上傳完成');
 
         // 步驟 2：建立 Alias（讓 richmenuswitch 能切換）
