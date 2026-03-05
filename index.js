@@ -89,6 +89,13 @@ app.get('/', (req, res) => {
   res.send('學人新創 LINE Bot 運作中 ✅');
 });
 
+// /ping 路由 - 給 cron-job.org 定時呼叫，防止 Render 冷啟動
+app.get('/ping', (req, res) => {
+  console.log(`[Ping] ${new Date().toISOString()} - 保持運作中`);
+  res.json({ status: 'ok', time: new Date().toISOString() });
+});
+
+
 // ===========================
 // 事件處理核心
 // ===========================
